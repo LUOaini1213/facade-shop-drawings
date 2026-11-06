@@ -65,6 +65,9 @@ IGNORE = shutil.ignore_patterns(".git", ".venv", "__pycache__", "*.pdf", "*.png"
 
 
 def run(mutant):
+    """mutant=None runs the unmutated baseline, which must pass."""
+    if mutant is None:
+        mutant = ("BASE", None, None, None, "")
     mid, rel, old, new, _ = mutant
     with tempfile.TemporaryDirectory(prefix="mut_%s_" % mid) as tmp:
         dst = Path(tmp) / "repo"
@@ -73,13 +76,17 @@ def run(mutant):
         for pdf in ROOT.glob("out/**/*.pdf"):
             (dst / pdf.relative_to(ROOT)).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(pdf, dst / pdf.relative_to(ROOT))
-        f = dst / rel
-        src = f.read_text(encoding="utf-8")
-        if src.count(old) != 1:
-            return mid, "BAD-PATTERN (%d matches)" % src.count(old)
-        f.write_text(src.replace(old, new), encoding="utf-8")
+        if rel is not None:
+            f = dst / rel
+            src = f.read_text(encoding="utf-8")
+            if src.count(old) != 1:
+                return mid, "BAD-PATTERN (%d matches)" % src.count(old)
+            f.write_text(src.replace(old, new), encoding="utf-8")
         r = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider"],
                            cwd=dst, capture_output=True, text=True)
+        if rel is None:
+            return mid, "pass" if r.returncode == 0 else "FAIL
+" + r.stdout[-3000:]
         return mid, "killed" if r.returncode != 0 else "SURVIVED"
 
 
@@ -89,6 +96,10 @@ def main():
     ap.add_argument("--only", nargs="*")
     args = ap.parse_args()
     todo = [m for m in MUTANTS if not args.only or m[0] in args.only]
+    _, base = run(None)                  # a kill only counts if the clean suite passes
+    print("baseline (no mutation): %s" % base)
+    if base != "pass":
+        return 1
     with ThreadPoolExecutor(args.jobs) as ex:
         results = dict(ex.map(run, todo))
     bad = 0

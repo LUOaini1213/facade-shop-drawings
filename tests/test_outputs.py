@@ -1,4 +1,5 @@
 import csv
+import difflib
 import filecmp
 import json
 import re
@@ -24,7 +25,13 @@ def test_committed_outputs_pass_all_checks():
 
 def test_committed_outputs_equal_fresh_build(built):
     diff = [f for f in DETERMINISTIC if not filecmp.cmp(built / f, COMMITTED / f, shallow=False)]
-    assert diff == []
+    detail = []
+    for f in diff[:3]:
+        a = (COMMITTED / f).read_text(encoding="utf-8").splitlines()
+        b = (built / f).read_text(encoding="utf-8").splitlines()
+        detail += list(difflib.unified_diff(a, b, f, f, n=1, lineterm=""))[:12]
+    assert diff == [], "
+".join(detail)
 
 
 def test_headline_numbers(built):
