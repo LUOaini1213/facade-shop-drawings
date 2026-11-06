@@ -1,0 +1,5 @@
+ezdxf==1.4.4
+highspy==1.15.1
+matplotlib==3.9.2
+numpy==2.4.6
+pytest==9.2.0

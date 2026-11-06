@@ -1,0 +1,46 @@
+{
+ "source_commit": "fac01b7f1cc2ca9103e49ead88a843be2806f234",
+ "panels": 810,
+ "panel_types": 5,
+ "members": 3962,
+ "frame_alu_kg": 34386.02,
+ "drawings": 5,
+ "stock_mm": [
+  6000,
+  6500
+ ],
+ "kerf_mm": 5,
+ "trim_mm": 20,
+ "pooled_ilp": {
+  "pieces": 3962,
+  "bars": 2027,
+  "bars_6000": 2027,
+  "bars_6500": 0,
+  "purchased_mm": 12162000,
+  "net_mm": 9326920,
+  "kerf_mm": 19810,
+  "trim_mm": 40540,
+  "offcut_mm": 2774730,
+  "yield_pct": 76.69
+ },
+ "pooled_ffd": {
+  "pieces": 3962,
+  "bars": 2027,
+  "bars_6000": 2027,
+  "bars_6500": 0,
+  "purchased_mm": 12162000,
+  "net_mm": 9326920,
+  "kerf_mm": 19810,
+  "trim_mm": 40540,
+  "offcut_mm": 2774730,
+  "yield_pct": 76.69
+ },
+ "by_type_ilp": {
+  "bars": 2065,
+  "purchased_mm": 12390000,
+  "net_mm": 9326920,
+  "offcut_mm": 3001970
+ },
+ "instances": 29,
+ "instances_ffd_optimal": 29
+}

@@ -1,0 +1,4 @@
+out/** -text
+upstream/** -text
+*.png binary
+*.pdf binary

@@ -1,0 +1,6 @@
+drawing_no,revision,title,panel_type,panels,sheet,scale,status,file
+FSD-SD-101,P1,"Unit U1 - Ground-floor standard unit - elevation, sections A and B, member schedule",U1,88,A3,1:20 / 1:5,INDICATIVE - NOT FOR CONSTRUCTION,drawings/FSD-SD-101.dxf
+FSD-SD-102,P1,"Unit U2 - Typical-floor unit - elevation, sections A and B, member schedule",U2,620,A3,1:20 / 1:5,INDICATIVE - NOT FOR CONSTRUCTION,drawings/FSD-SD-102.dxf
+FSD-SD-103,P1,"Unit U3 - Plant-room louvre unit - elevation, sections A and B, member schedule",U3,10,A3,1:20 / 1:5,INDICATIVE - NOT FOR CONSTRUCTION,drawings/FSD-SD-103.dxf
+FSD-SD-104,P1,"Unit U4 - Ground-floor entrance door unit - elevation, sections A and B, member schedule",U4,2,A3,1:20 / 1:5,INDICATIVE - NOT FOR CONSTRUCTION,drawings/FSD-SD-104.dxf
+FSD-SD-105,P1,"Unit U5 - Parapet unit - elevation, sections A and B, member schedule",U5,90,A3,1:20 / 1:5,INDICATIVE - NOT FOR CONSTRUCTION,drawings/FSD-SD-105.dxf

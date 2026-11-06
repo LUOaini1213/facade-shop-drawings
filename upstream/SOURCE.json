@@ -1,0 +1,15 @@
+{
+  "repo": "https://github.com/LUOaini1213/facade-bim",
+  "commit": "fac01b7f1cc2ca9103e49ead88a843be2806f234",
+  "license": "MIT",
+  "files": {
+    "panels.csv": "af0755a346e1a41c79d7ade9e5818d84185554d221a20141bc8d81afba7e595d",
+    "takeoff.csv": "9a03eb33050fb29c9de4732f2cc88dc9572d5c29303a2af0afa73fa009fc2e1f",
+    "config.py.txt": "84961d9fd1580c73cc168c430f9ef243b53ed563b7932a9770048b974a9c72e1"
+  },
+  "paths": {
+    "panels.csv": "data/panels.csv",
+    "takeoff.csv": "data/takeoff.csv",
+    "config.py.txt": "facade/config.py"
+  }
+}

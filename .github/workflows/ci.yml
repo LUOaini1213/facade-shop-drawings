@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Upstream files match facade-bim at the pinned commit
+        run: python scripts/verify_upstream.py
+      - name: Drawing and cutting-list checks on committed outputs
+        run: python scripts/check_outputs.py
+      - name: Fresh rebuild passes the same checks
+        run: |
+          python scripts/build.py --out /tmp/rebuild --no-pdf > /dev/null
+          python scripts/check_outputs.py /tmp/rebuild
+      - name: Tests (incl. byte comparison of rebuilt DXF/CSV/JSON)
+        run: python -m pytest
+      - name: README numbers
+        run: python scripts/check_readme.py
+
+  mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Every planted bug must fail the test suite
+        run: python scripts/mutation_check.py --jobs 4
