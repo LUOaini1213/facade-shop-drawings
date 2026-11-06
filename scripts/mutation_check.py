@@ -85,8 +85,7 @@ def run(mutant):
         r = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider"],
                            cwd=dst, capture_output=True, text=True)
         if rel is None:
-            return mid, "pass" if r.returncode == 0 else "FAIL
-" + r.stdout[-3000:]
+            return mid, "pass" if r.returncode == 0 else "FAIL " + r.stdout[-3000:]
         return mid, "killed" if r.returncode != 0 else "SURVIVED"
 
 

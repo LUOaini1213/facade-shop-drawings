@@ -30,8 +30,7 @@ def test_committed_outputs_equal_fresh_build(built):
         a = (COMMITTED / f).read_text(encoding="utf-8").splitlines()
         b = (built / f).read_text(encoding="utf-8").splitlines()
         detail += list(difflib.unified_diff(a, b, f, f, n=1, lineterm=""))[:12]
-    assert diff == [], "
-".join(detail)
+    assert diff == [], chr(10).join(detail)
 
 
 def test_headline_numbers(built):
