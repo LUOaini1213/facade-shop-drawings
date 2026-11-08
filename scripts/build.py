@@ -160,7 +160,8 @@ def main():
         "instances_ffd_optimal": sum(1 for r in summary if r["method"] == "FFD"
                                      and float(r["gap_vs_ilp_pct"]) == 0.0),
     }
-    (out / "summary.json").write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
+    with open(out / "summary.json", "w", encoding="utf-8", newline="\n") as f:   # LF on every OS
+        f.write(json.dumps(result, indent=1) + "\n")
 
     if not args.no_pdf:
         img = ROOT / "docs" / "img"

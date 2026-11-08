@@ -9,6 +9,8 @@ Profiles are deliberately simple hollow boxes: they show the module geometry
 taken from facade-bim (mullion width, transom height, frame depth, joint) and
 nothing about a real extrusion. Every sheet says so.
 """
+from collections import OrderedDict
+
 import ezdxf
 from ezdxf.enums import TextEntityAlignment
 
@@ -21,7 +23,8 @@ SECT_SCALE = 5
 REV = "P1"
 STATUS = "INDICATIVE - NOT FOR CONSTRUCTION"
 WALL = 3          # wall thickness of the simplified hollow-box profiles (mm)
-IGU = 24          # 6 + 12A + 6 (upstream config IGU_GLASS_MM counts glass only)
+LF = chr(10)
+IGU = 24         # 6 + 12A + 6 (upstream config IGU_GLASS_MM counts glass only)
 
 LAYERS = {        # name: ACI colour
     "BORDER": 7, "TITLE": 7, "FRAME": 5, "GLAZING": 4, "INFILL": 8,
@@ -259,7 +262,12 @@ def build_all(out_dir, panels=None):
     for ptype, (w, h, qty) in M.panel_types(panels).items():
         doc = sheet(ptype, w, h, qty, src)
         name = "%s.dxf" % drawing_no(ptype)
-        doc.saveas(out_dir / name)
+        # ezdxf takes its required CLASS names from a set, so their order follows
+        # the per-process hash seed; register them now and sort for stable bytes
+        doc.classes.add_required_classes(doc.dxfversion)
+        doc.classes.classes = OrderedDict(sorted(doc.classes.classes.items()))
+        with open(out_dir / name, "w", encoding="utf-8", newline=LF) as f:   # LF on every OS
+            doc.write(f)
         reg.append({"drawing_no": drawing_no(ptype), "revision": REV,
                     "title": "Unit %s - %s - elevation, sections A and B, member schedule"
                              % (ptype, upstream.TYPE_NAMES[ptype]),
